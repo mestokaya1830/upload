@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>Home Page</h2>
+  <form action="" method="post">
+    <input type="file" name="file" id="file">
+    <input type="button" value="Upload" id="upload">
+    <div id="output"></div>
+  </form>
+
+  <script>
+    const upload = document.getElementById('upload')
+    const output = document.getElementById('output')
+    const file = document.getElementById('file')
+    
+    
+    upload.onclick =() => {
+      const reader = new FileReader()
+      reader.onload = async (e) => {
+        const chunk_size = 100000//change chunk size for big files example(5000)
+        let chunk_count = e.target.result.byteLength/chunk_size
+        let file_name = Math.floor(Math.random() * 1000) +'-'+ file.files[0].name
+
+        for (let i = 0; i < chunk_count + 1; i++) {
+          let chunk = e.target.result.slice(i*chunk_size, i*chunk_size + chunk_size)
+          const result = await fetch('http://localhost:3000/upload', {
+            method:'POST',
+            headers:{
+              "content-type":"application/octet-stream",
+              "content-length": chunk.length,
+              "file_name": file_name
+            },
+            body: chunk
+          })
+
+          output.innerText = (i * 100 / Math.ceil(chunk_count, 0)).toFixed(0) +' %'
+        }
+      }
+      reader.readAsArrayBuffer(file.files[0])
+    }
+  </script>
+</body>
+</html>

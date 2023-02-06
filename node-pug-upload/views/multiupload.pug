@@ -1,0 +1,14 @@
+extends layout 
+block content 
+  form(action="/multiupload", method="post" enctype="multipart/form-data")
+    input(type="file", name="files" multiple)
+    //- input(type="file", name="fFile", accept="image/jpg, image/png, image/svg+xml, application/pdf")
+    input(type="submit" value="Upload")
+  if imageList
+    div #{imageList}
+    each item in imageList
+      img(src="/uploads/" + item alt="" width="100" heigth="100")
+  else if image
+    img(src="/uploads/" + image alt="" width="100" heigth="100")
+  else
+    img(src="/uploads/html-5-icon.png" alt="" width="100" heigth="100")

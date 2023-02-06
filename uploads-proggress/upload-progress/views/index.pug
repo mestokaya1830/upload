@@ -1,0 +1,12 @@
+extends layout 
+block content 
+  .wrapper
+    header File Uploader
+    form#form(action='/upload', enctype='multipart/form-data')
+      input#file(type='file', name='file')
+      i.fas.fa-cloud-upload-alt
+      p Browse file to upload 
+    ul#area
+    ul.uploaded-area
+  script(src='../app.js')
+    

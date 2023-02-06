@@ -1,0 +1,37 @@
+extends layout
+block content
+  .container
+    h1 #{posts.title}
+    p.meta
+      b #{posts.category} 
+      by #{posts.author} 
+      on #{moment(posts.date).format("MM-DD-YYYY")}
+    img.titleImg(src='/images/'+posts.mainimage)
+    !=posts.commenttext
+    br
+    hr
+    if posts.comments
+      h3 Comments
+      each item in posts.comments
+        .comment
+        p.comment-name #{item.name}
+        p.comment-commenttext #{item.commenttext}
+  br
+  h3 Add Comment
+  if errors
+    ul.errors
+    each error, i in errors
+      li.alert.alert-danger #{error.msg}
+  form.comment-form(method='post', action='/posts/addcomment')
+    input(name='postid', type='hidden', value=posts._id)
+    .form-group
+    label Name
+    input.form-control(type='text', name='name')
+    .form-group
+    label Email
+    input.form-control(type='text', name='email')
+    .form-group
+    label Body
+    textarea.form-control(type='text', name='commenttext')
+    br
+    input.btn.btn-default(type='submit', name='submit',value='Add Comment')

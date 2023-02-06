@@ -1,0 +1,10 @@
+extends layout
+block content
+  form(action="/upload", method="post" enctype="multipart/form-data")
+    input(type="file", name="file")
+    //- input(type="file", name="fFile", accept="image/jpg, image/png, image/svg+xml, application/pdf")
+    input(type="submit" value="Upload")
+  if imgname
+    img(src="/uploads/" + imgname alt="" width="100" heigth="100")
+  else
+    img(src="/uploads/html-5-icon.png" alt="" width="100" heigth="100")

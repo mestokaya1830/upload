@@ -1,0 +1,15 @@
+extends layout
+block content
+  .container
+    if posts
+    each post in posts
+      hr
+      h2 #{post.title}
+      p.meta
+        b #{post.category} 
+        by #{post.author} 
+        on #{moment(post.date).format("MM-DD-YYYY")}
+      img.titleImg(src='images/'+ post.mainimage)
+      !=truncateText(post.commenttext,400)
+      a.more(href='/posts/show/'+post._id) Read More
+    footer Nodejs Blog &copy; 2021
